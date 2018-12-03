@@ -1,0 +1,12 @@
+.tiling-icon
+{
+    width: 24px;
+    height: 24px;
+    background-image: url("images/indicator.png");
+    background-size: 16px 16px;
+}
+
+.tiling-icon:hover
+{
+    background-image: url("images/indicator_hover.png");
+}
