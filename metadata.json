@@ -1,1 +1,7 @@
-{"name": "Tiler", "description": "Tiler keeps your windows organized.", "uuid": "tiler@ludwigd.github.com", "shell-version": ["3.30.2"]}
+{
+    "name": "Tiler",
+    "description": "Tiler keeps your windows organized.",
+    "uuid": "tiler@ludwigd.github.com",
+    "shell-version": ["3.36"],
+    "version": 1
+}
