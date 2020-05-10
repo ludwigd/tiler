@@ -107,38 +107,35 @@ const TilerIndicator = new Lang.Class({
 
 function native_maximize() {
     let window = get_focused_window();
-    window.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
+    if (window.can_maximize()) {
+        window.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
+    }
 }
 
 function do_tile(width, height, xoffs, yoffs) {
     let window = get_focused_window();
 
-    reset_window(window);
-    
-    let monitor = window.get_monitor();
-    let workspace = WorkspaceManager.get_active_workspace();
-    let workarea = workspace.get_work_area_for_monitor(monitor);
-
-    let coordinates = {
-        x: workarea.x,
-        y: workarea.y,
-        width: workarea.width,
-        height: workarea.height
-    };
-
-    window.move_resize_frame(true,
-                             coordinates.x + xoffs * coordinates.width,
-                             coordinates.y + yoffs * coordinates.height,
-                             coordinates.width * width,
-                             coordinates.height * height);
+    if (window.can_maximize()) {
+        window.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
+        
+        let monitor = window.get_monitor();
+        let workspace = WorkspaceManager.get_active_workspace();
+        let workarea = workspace.get_work_area_for_monitor(monitor);
+        
+        let coordinates = {
+            x: workarea.x,
+            y: workarea.y,
+            width: workarea.width,
+            height: workarea.height
+        };
+        
+        window.move_resize_frame(true,
+                                 coordinates.x + xoffs * coordinates.width,
+                                 coordinates.y + yoffs * coordinates.height,
+                                 coordinates.width * width,
+                                 coordinates.height * height);
+    }
 }
-
-function reset_window(window) {
-    //window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
-    //window.unmaximize(Meta.MaximizeFlags.VERTICAL);
-    window.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
-}
-
 
 function get_focused_window() {
     let windows = WorkspaceManager.get_active_workspace().list_windows();
