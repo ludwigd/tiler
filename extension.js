@@ -4,16 +4,26 @@ const Lang = imports.lang;
 const Main = imports.ui.main;
 const Shell = imports.gi.Shell;
 const Meta = imports.gi.Meta;
+const Gio = imports.gi.Gio;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 const WorkspaceManager = global.workspace_manager || global.screen;
-
-/* KeyManager class */
 const Extension = imports.misc.extensionUtils.getCurrentExtension();
-imports.searchPath.unshift(Extension.path);
-const Keybindings = imports.keybindings;
+const Keybindings = Extension.imports.keybindings;
 
-/* Offered tiling options */
+// Get the GSchema for our settings
+let gschema = Gio.SettingsSchemaSource.new_from_directory(
+    Extension.dir.get_child('schemas').get_path(),
+    Gio.SettingsSchemaSource.get_default(),
+    false
+);
+
+// Create a new settings object
+let settings = new Gio.Settings({
+    settings_schema: gschema.lookup('org.gnome.shell.extensions.tiler', true)
+});
+
+// tiling options
 const tiling_options = {
     'left'             : function() {do_tile(0.5, 1, 0, 0);},
     'right'            : function() {do_tile(0.5, 1, 0.5, 0);},
@@ -31,7 +41,7 @@ const tiling_options = {
     'maximize'         : function() {native_maximize();}
 }
 
-/* Option names displayed in the menu. Change them to fit your prefered language. */
+// Option names displayed in the menu. Change them to fit your prefered language.
 const tiling_option_names = {
     'left'             : 'Left',
     'right'            : 'Right',
@@ -47,24 +57,6 @@ const tiling_option_names = {
     'two-right-thirds' : 'Two right thirds',
     'right-third'      : 'Right third',
     'maximize'         : 'Maximize'
-}
-
-/* Keybindings. Change to fit your needs. */
-const tiling_option_bindings = {
-    'left'             : '<super><alt>left',
-    'right'            : '<super><alt>right',
-    'top'              : '<super><alt>up',
-    'bottom'           : '<super><alt>down',
-    'top-left'         : '<super><alt>u',
-    'top-right'        : '<super><alt>i',
-    'bottom-left'      : '<super><alt>j',
-    'bottom-right'     : '<super><alt>k',
-    'left-third'       : '<super><alt>d',
-    'two-left-thirds'  : '<super><alt>e',
-    'middle-third'     : '<super><alt>f',
-    'two-right-thirds' : '<super><alt>t',
-    'right-third'      : '<super><alt>g',
-    'maximize'         : '<super><alt>return'
 }
 
 const TilerMenuItem = new Lang.Class({
@@ -97,9 +89,8 @@ const TilerIndicator = new Lang.Class({
         for (var key in tiling_options) {
             let name = tiling_option_names[key];
             let func = tiling_options[key];
-            let accel = tiling_option_bindings[key];
+            let accel = settings.get_strv(key)[0];
             this.menu.addMenuItem(new TilerMenuItem(name, func));
-
             keymanager.add(accel, func);
         }
     },

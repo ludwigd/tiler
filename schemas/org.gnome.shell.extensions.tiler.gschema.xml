@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.tiler" path="/org/gnome/shell/extensions/tiler/">
+    <key type="as" name="left">
+      <default><![CDATA[['<Super><Alt>Left']]]></default>
+      <summary>Tile window to the left.</summary>
+    </key>
+    <key type="as" name="right">
+      <default><![CDATA[['<Super><Alt>Right']]]></default>
+      <summary>Tile window to the right.</summary>
+    </key>
+    <key type="as" name="top">
+      <default><![CDATA[['<Super><Alt>Up']]]></default>
+      <summary>Tile window to the top.</summary>
+    </key>
+    <key type="as" name="bottom">
+      <default><![CDATA[['<Super><Alt>Down']]]></default>
+      <summary>Tile window to the bottom.</summary>
+    </key>
+    <key type="as" name="top-left">
+      <default><![CDATA[['<Super><Alt>u']]]></default>
+      <summary>Tile window to the upper left corner.</summary>
+    </key>
+    <key type="as" name="top-right">
+      <default><![CDATA[['<Super><Alt>i']]]></default>
+      <summary>Tile window to the upper right corner.</summary>
+    </key>
+    <key type="as" name="bottom-left">
+      <default><![CDATA[['<Super><Alt>j']]]></default>
+      <summary>Tile window to the lower left corner.</summary>
+    </key>
+    <key type="as" name="bottom-right">
+      <default><![CDATA[['<Super><Alt>k']]]></default>
+      <summary>Tile window to the lower right corner.</summary>
+    </key>
+    <key type="as" name="left-third">
+      <default><![CDATA[['<Super><Alt>d']]]></default>
+      <summary>Tile window to the left third.</summary>
+    </key>
+    <key type="as" name="two-left-thirds">
+      <default><![CDATA[['<Super><Alt>e']]]></default>
+      <summary>Tile window to the left two thirds.</summary>
+    </key>
+    <key type="as" name="middle-third">
+      <default><![CDATA[['<Super><Alt>f']]]></default>
+      <summary>Tile window to the middle third.</summary>
+    </key>
+    <key type="as" name="two-right-thirds">
+      <default><![CDATA[['<Super><Alt>t']]]></default>
+      <summary>Tile window to the right two thirds.</summary>
+    </key>
+    <key type="as" name="right-third">
+      <default><![CDATA[['<Super><Alt>g']]]></default>
+      <summary>Tile window to the right third.</summary>
+    </key>
+    <key type="as" name="maximize">
+      <default><![CDATA[['<Super><Alt>Return']]]></default>
+      <summary>Maximize window.</summary>
+    </key>
+  </schema>
+</schemalist>
