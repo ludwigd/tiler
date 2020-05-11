@@ -1,36 +1,26 @@
-# tiler
+# Tiler
 
 A tiling extension for GNOME that fits my personal needs better than
 [gTile](https://github.com/gTile/gTile) or
 [WinTile](https://github.com/Fmstrat/wintile), as it behaves similar
 to [Magnet](https://magnet.crowdcafe.com/).
 
-## Key bindings
+This extension does not have any fancy feature, like dragging windows
+to the screen borders to tile them. It has just the menu and the
+keybindings.
 
-- Super+Alt+left, left half of the screen
-- Super+Alt+right, right half
-- Super+Alt+up, top half
-- Super+Alt+down, bottom half
-
-- Super+Alt+u, top left
-- Super+Alt+i, top right
-- Super+Alt+j, bottom left
-- Super+Alt+k, bottom right
-
-- Super+Alt+d, left third
-- Super+Alt+e, two left thirds
-- Super+Alt+f, middle third
-- Super+Alt+g, right third
-- Super+Alt+t, two right thirds
+![Tiler](screenshots/tiler-menu.png)
 
 ## Configuration
 
-Just change the sources directly.
+The new version features a nice settings dialog to change keybindings.
 
-## Known problems
+![Settings](screenshots/tiler-settings.png)
 
-- not tested
-- no "undo tiling" function
+## Known Problems
+
+- not (officially) tested on other machines than mine
+- it is currently not possible to reset windows to their pre-tiling state
 
 ## Acknowledgments
 
