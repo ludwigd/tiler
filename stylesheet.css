@@ -10,3 +10,12 @@
 {
     background-image: url("images/indicator_hover.png");
 }
+
+.accelerator-label
+{
+    background-color: #656565;
+    font-size: 12px;
+    padding: 2px 5px;
+    border: 1px solid #656565;
+    border-radius: 10px;
+}

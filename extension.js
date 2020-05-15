@@ -1,5 +1,6 @@
 /* Library imports */
 const St = imports.gi.St;
+const Clutter =imports.gi.Clutter;
 const Lang = imports.lang;
 const Main = imports.ui.main;
 const Shell = imports.gi.Shell;
@@ -24,7 +25,7 @@ let settings = new Gio.Settings({
 });
 
 // tiling options
-const tiling_options = {
+const tiling_callbacks = {
     'left'             : function() {do_tile(0.5, 1, 0, 0);},
     'right'            : function() {do_tile(0.5, 1, 0.5, 0);},
     'top'              : function() {do_tile(1, 0.5, 0, 0);},
@@ -42,7 +43,7 @@ const tiling_options = {
 }
 
 // Option names displayed in the menu. Change them to fit your prefered language.
-const tiling_option_names = {
+const tiling_names = {
     'left'             : 'Left',
     'right'            : 'Right',
     'top'              : 'Top',
@@ -59,40 +60,49 @@ const tiling_option_names = {
     'maximize'         : 'Maximize'
 }
 
-const TilerMenuItem = new Lang.Class({
-    Name: 'TilerMenuItem',
-    Extends: PopupMenu.PopupBaseMenuItem,
-    _init: function(name, callback) {
-        this.parent();
-
-        this.label = new St.Label({ text: name });
-        this.actor.add(this.label, { expand: true });
-        this.actor.label_actor = this.label;
-
-        this.connect('activate', Lang.bind(this, callback));
-    },
-});
-
 const TilerIndicator = new Lang.Class({
     Name: 'TilerIndicator',
     Extends: PanelMenu.Button,
     
     _init: function(keymanager) {
         this.parent(0.0, "Magnet", false);
-
-        this.actor.add_style_class_name('tiling-icon');
-
+        this.add_style_class_name('tiling-icon');
         this.buildUI(keymanager);
     },
-    
+
     buildUI: function(keymanager) {
-        for (var key in tiling_options) {
-            let name = tiling_option_names[key];
-            let func = tiling_options[key];
+        for (var key in tiling_callbacks) {
+            let name = tiling_names[key];
+            let callback = tiling_callbacks[key];
             let accel = settings.get_strv(key)[0];
-            this.menu.addMenuItem(new TilerMenuItem(name, func));
-            keymanager.add(accel, func);
+
+            let menu_item = this.make_menu_item(name, accel);
+            menu_item.connect('activate', Lang.bind(menu_item, callback));
+            this.menu.addMenuItem(menu_item);
+
+            keymanager.add(accel, callback);
         }
+    },
+
+    make_menu_item: function(name, accelerator_name) {
+        let menu_item = new PopupMenu.PopupBaseMenuItem();
+
+        let menu_label = new St.Label({
+            text: name,
+            x_expand: true,
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        menu_item.add(menu_label);
+
+        let accelerator_label = new St.Label({
+            text: accelerator_name,
+            x_expand: false,
+            y_align: Clutter.ActorAlign.CENTER,
+        });
+        accelerator_label.add_style_class_name('accelerator-label');
+        menu_item.add(accelerator_label);
+
+        return menu_item;
     },
 });
 
@@ -121,10 +131,10 @@ function do_tile(width, height, xoffs, yoffs) {
         };
         
         window.move_resize_frame(true,
-                                 coordinates.x + xoffs * coordinates.width,
-                                 coordinates.y + yoffs * coordinates.height,
-                                 coordinates.width * width,
-                                 coordinates.height * height);
+                                 coordinates.x + xoffs * coordinates.width + 5,
+                                 coordinates.y + yoffs * coordinates.height + 5,
+                                 coordinates.width * width - 10,
+                                 coordinates.height * height - 10);
     }
 }
 
