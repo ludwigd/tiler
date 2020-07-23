@@ -131,10 +131,10 @@ function do_tile(width, height, xoffs, yoffs) {
         };
         
         window.move_resize_frame(true,
-                                 coordinates.x + xoffs * coordinates.width + 5,
-                                 coordinates.y + yoffs * coordinates.height + 5,
-                                 coordinates.width * width - 10,
-                                 coordinates.height * height - 10);
+                                 coordinates.x + xoffs * coordinates.width,
+                                 coordinates.y + yoffs * coordinates.height,
+                                 coordinates.width * width,
+                                 coordinates.height * height);
     }
 }
 
