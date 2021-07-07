@@ -2,35 +2,35 @@
 <schemalist>
   <schema id="org.gnome.shell.extensions.tiler" path="/org/gnome/shell/extensions/tiler/">
     <key type="as" name="left">
-      <default><![CDATA[['<Super><Alt>Left']]]></default>
+      <default><![CDATA[['<Super><Alt>h']]]></default>
       <summary>Tile window to the left.</summary>
     </key>
     <key type="as" name="right">
-      <default><![CDATA[['<Super><Alt>Right']]]></default>
+      <default><![CDATA[['<Super><Alt>l']]]></default>
       <summary>Tile window to the right.</summary>
     </key>
     <key type="as" name="top">
-      <default><![CDATA[['<Super><Alt>Up']]]></default>
+      <default><![CDATA[['<Super><Alt>k']]]></default>
       <summary>Tile window to the top.</summary>
     </key>
     <key type="as" name="bottom">
-      <default><![CDATA[['<Super><Alt>Down']]]></default>
+      <default><![CDATA[['<Super><Alt>j']]]></default>
       <summary>Tile window to the bottom.</summary>
     </key>
     <key type="as" name="top-left">
-      <default><![CDATA[['<Super><Alt>u']]]></default>
+      <default><![CDATA[['<Super><Alt>y']]]></default>
       <summary>Tile window to the upper left corner.</summary>
     </key>
     <key type="as" name="top-right">
-      <default><![CDATA[['<Super><Alt>i']]]></default>
+      <default><![CDATA[['<Super><Alt>u']]]></default>
       <summary>Tile window to the upper right corner.</summary>
     </key>
     <key type="as" name="bottom-left">
-      <default><![CDATA[['<Super><Alt>j']]]></default>
+      <default><![CDATA[['<Super><Alt>i']]]></default>
       <summary>Tile window to the lower left corner.</summary>
     </key>
     <key type="as" name="bottom-right">
-      <default><![CDATA[['<Super><Alt>k']]]></default>
+      <default><![CDATA[['<Super><Alt>o']]]></default>
       <summary>Tile window to the lower right corner.</summary>
     </key>
     <key type="as" name="left-third">
