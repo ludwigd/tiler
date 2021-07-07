@@ -56,12 +56,7 @@ var Manager = class Manager {
     add(accelerator, callback) {
         let action = Meta.KeyBindingAction.NONE;
 
-        // A flags argument was added somewhere between 3.30-3.32
-        if (SHELL_VERSION_MINOR > 30) {
-            action = global.display.grab_accelerator(accelerator, 0);
-        } else {
-            action = global.display.grab_accelerator(accelerator);
-        }
+        action = global.display.grab_accelerator(accelerator, Meta.KeyBindingFlags.IGNORE_AUTOREPEAT);
 
         if (action !== Meta.KeyBindingAction.NONE) {
             let name = Meta.external_binding_name_for_action(action);

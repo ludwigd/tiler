@@ -26,20 +26,20 @@ let settings = new Gio.Settings({
 
 // tiling options
 const tiling_callbacks = {
-    'left'             : function() {do_tile(0.5, 1, 0, 0);},
-    'right'            : function() {do_tile(0.5, 1, 0.5, 0);},
-    'top'              : function() {do_tile(1, 0.5, 0, 0);},
-    'bottom'           : function() {do_tile(1, 0.5, 0, 0.5);},
-    'top-left'         : function() {do_tile(0.5, 0.5, 0, 0);},
-    'top-right'        : function() {do_tile(0.5, 0.5, 0.5, 0);},
-    'bottom-left'      : function() {do_tile(0.5, 0.5, 0, 0.5);},
-    'bottom-right'     : function() {do_tile(0.5, 0.5, 0.5, 0.5);},
-    'left-third'       : function() {do_tile(0.34, 1, 0, 0);},
-    'two-left-thirds'  : function() {do_tile(0.67, 1, 0, 0);},
-    'middle-third'     : function() {do_tile(0.33, 1, 0.34, 0);},
-    'two-right-thirds' : function() {do_tile(0.66, 1, 0.34, 0);},
-    'right-third'      : function() {do_tile(0.33, 1, 0.67, 0);},
-    'maximize'         : function() {native_maximize();}
+    'left'             : function() {tileWindow(0.5, 1, 0, 0);},
+    'right'            : function() {tileWindow(0.5, 1, 0.5, 0);},
+    'top'              : function() {tileWindow(1, 0.5, 0, 0);},
+    'bottom'           : function() {tileWindow(1, 0.5, 0, 0.5);},
+    'top-left'         : function() {tileWindow(0.5, 0.5, 0, 0);},
+    'top-right'        : function() {tileWindow(0.5, 0.5, 0.5, 0);},
+    'bottom-left'      : function() {tileWindow(0.5, 0.5, 0, 0.5);},
+    'bottom-right'     : function() {tileWindow(0.5, 0.5, 0.5, 0.5);},
+    'left-third'       : function() {tileWindow(0.34, 1, 0, 0);},
+    'two-left-thirds'  : function() {tileWindow(0.67, 1, 0, 0);},
+    'middle-third'     : function() {tileWindow(0.33, 1, 0.34, 0);},
+    'two-right-thirds' : function() {tileWindow(0.66, 1, 0.34, 0);},
+    'right-third'      : function() {tileWindow(0.33, 1, 0.67, 0);},
+    'maximize'         : function() {nativeMaximize();}
 }
 
 // Option names displayed in the menu. Change them to fit your prefered language.
@@ -106,45 +106,29 @@ const TilerIndicator = new Lang.Class({
     },
 });
 
-function native_maximize() {
+function nativeMaximize() {
     let window = get_focused_window();
     if (window.can_maximize()) {
         window.maximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
     }
 }
 
-function do_tile(width, height, xoffs, yoffs) {
-    let window = get_focused_window();
+function tileWindow(width, height, xoffs, yoffs) {
+    let window = get_focused_window();    
+    let workarea = window.get_work_area_current_monitor();
+    
+    window.unmaximize(Meta.MaximizeFlags.BOTH);
 
-    if (window.can_maximize()) {
-        window.unmaximize(Meta.MaximizeFlags.HORIZONTAL | Meta.MaximizeFlags.VERTICAL);
-        
-        let monitor = window.get_monitor();
-        let workspace = WorkspaceManager.get_active_workspace();
-        let workarea = workspace.get_work_area_for_monitor(monitor);
-        
-        let coordinates = {
-            x: workarea.x,
-            y: workarea.y,
-            width: workarea.width,
-            height: workarea.height
-        };
-        
-        window.move_resize_frame(true,
-                                 coordinates.x + xoffs * coordinates.width,
-                                 coordinates.y + yoffs * coordinates.height,
-                                 coordinates.width * width,
-                                 coordinates.height * height);
-    }
+    let windowPosX = workarea.x + (workarea.width * xoffs);
+    let windowPosY = workarea.y + (workarea.height * yoffs);
+    let windowWidth = workarea.width * width;
+    let windowHeight = workarea.height * height;
+    
+    window.move_resize_frame(false, windowPosX, windowPosY, windowWidth, windowHeight);
 }
 
 function get_focused_window() {
-    let windows = WorkspaceManager.get_active_workspace().list_windows();
-    let focused = false;
-    for (let i=0;i<windows.length; i++) {
-        if (windows[i].has_focus())
-            return windows[i];
-    }
+    return global.display.focus_window;
 }
 
 function init() {
